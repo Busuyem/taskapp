@@ -4,12 +4,14 @@ const dotenv = require('dotenv').config()
 const taskRouter = require('./routes/task')
 const connectDB = require('./db/connect')
 const notFound = require('./middleware/route-middleware')
+const errorHandler = require('./middleware/error-handler')
+const port = process.env.PORT || 3000
 
 
 const start = async() => {
     try {
         await connectDB(process.env.MONGO_URL);
-        app.listen(3000, (req, res) => {
+        app.listen(port, (req, res) => {
             console.log('App is listening on Port 3000');
         })
 
@@ -30,4 +32,5 @@ app.use('/api/vi/tasks', taskRouter);
 
 //Not found middleware
 app.use(notFound)
+app.use(errorHandler)
 start()
