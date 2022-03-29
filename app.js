@@ -3,6 +3,7 @@ const app = express();
 const dotenv = require('dotenv').config()
 const taskRouter = require('./routes/task')
 const connectDB = require('./db/connect')
+const notFound = require('./middleware/route-middleware')
 
 
 const start = async() => {
@@ -19,7 +20,6 @@ const start = async() => {
 
 //Middleware
 app.use(express.json())
-
 app.use(express.static('public'))
 
 // app.get('/', (req, res) => {
@@ -28,4 +28,6 @@ app.use(express.static('public'))
 
 app.use('/api/vi/tasks', taskRouter);
 
+//Not found middleware
+app.use(notFound)
 start()
